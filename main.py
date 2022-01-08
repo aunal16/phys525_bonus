@@ -17,12 +17,12 @@ def integral_func_p(y, y0):
     return np.sqrt(y)/(1 + np.exp(y - y0))
 
 
-def n_concentration_eq(x0):
+def n_concentration_eq(x0, n=n):
     return -n + (2 * m_e_eff * kB * T)**(3/2) / (2 * np.pi**2 * hbar**3) * \
            (quad(integral_func_n, 0, INFTY, args=(x0,))[0])
 
 
-def p_concentration_eq(x0):
+def p_concentration_eq(x0, p=p):
     return -p + (2 * m_h_eff * kB * T)**(3/2) / (2 * np.pi**2 * hbar**3) * \
            (quad(integral_func_p, 0, INFTY, args=(x0,))[0])
 
@@ -89,7 +89,7 @@ def main():
     gamma = (fcE2 - fvE1) * (2 * m_reduc) ** (3/2) * c**2 / (2 * tau_r * n_s ** 4) * np.sqrt(hnu0 - E_g) / (hnu0)**2
     #plt.figure()
     plt.subplot(1, 3, 3)
-    plt.plot(hnu0, gamma * 4.930993265537583 * 1e17)
+    plt.plot(hnu0, gamma * 4.930993265537583 * 1e17, label="n=p=2.5*1e18")
     plt.xlim([1.4, 1.6])
     plt.title('Differential Gain')
     plt.xlabel(r'$E = h\nu_0$ (eV)', labelpad=-0)
@@ -116,6 +116,36 @@ def main():
         xmin, xmax, ymin, ymax = plt.axis()
         plt.text(x=E_zero + (xmax - xmin)/20, y=ymin + (ymax - ymin)/10, s='E ≈ ' + str(np.round(E_zero, 4)) + ' eV',
                  color = 'w', rotation=90, bbox=dict(facecolor='red', alpha=0.6))
+
+    # UNCOMMENT BELOW TO COMPARE DIFFERENTIAL GAINS OF P1 (main.py) AND P2 (main_2.py)
+    # n, p = 1.8 * 1e18, 1.8 * 1e18
+    # x0 = fsolve(n_concentration_eq, 3.7, args=(n,))[0]
+    # y0 = fsolve(p_concentration_eq, -1.4, args=(p,))[0]
+    # print("x0:", x0, "\ny0:", y0)
+    #
+    # # Efn = Ec + kBTx0
+    # # Efp = Ev - kBTy0
+    # # E2 = Ec + m_reduc/m_e_eff * (h\nu_0 - Eg)
+    # # E1 = Ev - m_reduc/m_h_eff * (h\nu_0 - Eg)
+    # hnu0 = np.linspace(1.4, 1.6, 2000)
+    # E2_minus_Efn = + m_reduc / m_e_eff * (hnu0 - E_g) - kBT_ev * x0
+    # E1_minus_Efp = - m_reduc / m_h_eff * (hnu0 - E_g) + kBT_ev * y0
+    #
+    # fcE2 = (np.exp(E2_minus_Efn / kBT_ev) + 1) ** (-1)
+    # fvE1 = (np.exp(E1_minus_Efp / kBT_ev) + 1) ** (-1)
+    # gamma = (fcE2 - fvE1) * (2 * m_reduc) ** (3 / 2) * c ** 2 / (2 * tau_r * n_s ** 4) * np.sqrt(hnu0 - E_g) / (
+    #     hnu0) ** 2
+    # plt.subplot(1, 3, 3)
+    # plt.plot(hnu0, gamma * 4.930993265537583 * 1e17, label="n=p=1.8*1e18")
+    #
+    # E_zero = fsolve(zero_finder, 1.475)[0]
+    #
+    # plt.axvline(x=E_zero, color='r', linestyle='--')
+    # xmin, xmax, ymin, ymax = plt.axis()
+    # plt.text(x=E_zero + (xmax - xmin) / 20, y=ymin + (ymax - ymin) / 10, s='E ≈ ' + str(np.round(E_zero, 4)) + ' eV',
+    #          color='w', rotation=90, bbox=dict(facecolor='red', alpha=0.6))
+    #
+    # plt.legend()
 
     plt.show()
 
