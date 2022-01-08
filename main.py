@@ -42,7 +42,7 @@ def main():
     """ This program plots and solves the equations specified in Sennaroglu Prob. 7.19"""
     print("PHYS 525 / ELEC 425: BONUS PROBLEM #1")
     print("-----------------------------------------")
-    print("Implemented by Ahmet Hamdi Unal, 0060167.\nNo rights reserved, feel free to use it!")
+    print("Implemented by Ahmet Hamdi Unal, 0060167.\nNo rights reserved; feel free to use it!")
     print("-----------------------------------------")
     print(" ----------- Program started! -----------\n")
     # 1ST PLOT: fc(E2) - fv(E1)
