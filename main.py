@@ -152,7 +152,7 @@ def main():
     #
     # fcE2 = (np.exp(E2_minus_Efn / kBT_ev) + 1) ** (-1)
     # fvE1 = (np.exp(E1_minus_Efp / kBT_ev) + 1) ** (-1)
-    # gamma = (fcE2 - fvE1) * (2 * m_reduc) ** (3 / 2) * c ** 2 / (2 * tau_r * n_s ** 4) * np.sqrt(hnu0 - E_g) / (
+    # gamma = (fcE2 - fvE1) * (2 * m_reduc) ** (3 / 2) * c ** 2 / (2 * tau_r * n_s ** 2) * np.sqrt(hnu0 - E_g) / (
     #     hnu0) ** 2
     # plt.subplot(1, 3, 3)
     # plt.plot(hnu0, gamma * 4.930993265537583 * 1e17, label="n=p=1.8*1e18")
