@@ -88,7 +88,7 @@ def main():
 
     # 3RD PLOT: gamma(\nu_0)
     # gamma(\nu_0)
-    gamma = (fcE2 - fvE1) * (2 * m_reduc) ** (3 / 2) * c ** 2 / (2 * tau_r * n_s ** 4) * np.sqrt(hnu0 - E_g) / (
+    gamma = (fcE2 - fvE1) * (2 * m_reduc) ** (3 / 2) * c ** 2 / (2 * tau_r * n_s ** 2) * np.sqrt(hnu0 - E_g) / (
         hnu0) ** 2
     # plt.figure()
     plt.subplot(1, 3, 3)
@@ -135,7 +135,7 @@ def main():
     # plt.plot(E1_minus_Efp_maxg/kBT_ev)
 
     gamma_precise = (fcE2_maxg - fvE1_maxg) * (2 * m_reduc) ** (3 / 2) * c ** 2 / \
-                    (2 * tau_r * n_s ** 4) * np.sqrt(hnu0_maxg - E_g) / hnu0_maxg ** 2
+                    (2 * tau_r * n_s ** 2) * np.sqrt(hnu0_maxg - E_g) / hnu0_maxg ** 2
     g_max = max(gamma_precise * 4.930993265537583 * 1e17)
     print("Gain(max) (numerical): ", g_max, "cm-1")
 
@@ -153,7 +153,7 @@ def main():
 
     # Obtain the maximum
     def f(x):
-        return np.sqrt(x - 1.42) * 1.518 * 1e-15 / x ** 2 * ((np.exp(34.481 *
+        return np.sqrt(x - 1.42) * 1.967 * 1e-14 / x ** 2 * ((np.exp(34.481 *
                (x - 1.42) - 2.807) + 1) ** (-1) - (np.exp(-4.2 * (x - 1.42) -
                1.676) + 1) ** (-1))
 

@@ -86,7 +86,7 @@ def main():
 
     # 3RD PLOT: gamma(\nu_0)
     # gamma(\nu_0)
-    gamma = (fcE2 - fvE1) * (2 * m_reduc) ** (3/2) * c**2 / (2 * tau_r * n_s ** 4) * np.sqrt(hnu0 - E_g) / (hnu0)**2
+    gamma = (fcE2 - fvE1) * (2 * m_reduc) ** (3/2) * c**2 / (2 * tau_r * n_s ** 2) * np.sqrt(hnu0 - E_g) / (hnu0)**2
     #plt.figure()
     plt.subplot(1, 3, 3)
     plt.plot(hnu0, gamma * 4.930993265537583 * 1e17, label="n=p=2.5*1e18")
@@ -117,7 +117,26 @@ def main():
         plt.text(x=E_zero + (xmax - xmin)/20, y=ymin + (ymax - ymin)/10, s='E ≈ ' + str(np.round(E_zero, 4)) + ' eV',
                  color = 'w', rotation=90, bbox=dict(facecolor='red', alpha=0.6))
 
+    # Find Maximum Gain
+    # Let us increase the precision of hnu0 for better results.
+    eps = 10**(-8)
+    hnu0_maxg = np.arange(E_g, E_zero, eps)
+
+    E2_minus_Efn_maxg = + m_reduc / m_e_eff * (hnu0_maxg - E_g) - kBT_ev * x0
+    E1_minus_Efp_maxg = - m_reduc / m_h_eff * (hnu0_maxg - E_g) + kBT_ev * y0
+    fcE2_maxg = (np.exp(E2_minus_Efn_maxg / kBT_ev) + 1) ** (-1)
+    fvE1_maxg = (np.exp(E1_minus_Efp_maxg / kBT_ev) + 1) ** (-1)
+
+    # plt.figure()
+    # plt.plot(E1_minus_Efp_maxg/kBT_ev)
+
+    gamma_precise = (fcE2_maxg - fvE1_maxg) * (2 * m_reduc) ** (3 / 2) * c ** 2 / \
+                    (2 * tau_r * n_s ** 2) * np.sqrt(hnu0_maxg - E_g) / hnu0_maxg ** 2
+    g_max = max(gamma_precise * 4.930993265537583 * 1e17)
+    print("Gain(max) (numerical): ", g_max, "cm-1")
+
     # UNCOMMENT BELOW TO COMPARE DIFFERENTIAL GAINS OF P1 (main.py) AND P2 (main_2.py)
+
     # n, p = 1.8 * 1e18, 1.8 * 1e18
     # x0 = fsolve(n_concentration_eq, 3.7, args=(n,))[0]
     # y0 = fsolve(p_concentration_eq, -1.4, args=(p,))[0]
@@ -145,7 +164,7 @@ def main():
     # plt.text(x=E_zero + (xmax - xmin) / 20, y=ymin + (ymax - ymin) / 10, s='E ≈ ' + str(np.round(E_zero, 4)) + ' eV',
     #          color='w', rotation=90, bbox=dict(facecolor='red', alpha=0.6))
     #
-    # plt.legend()
+    # plt.legend(loc='center left')
 
     plt.show()
 
